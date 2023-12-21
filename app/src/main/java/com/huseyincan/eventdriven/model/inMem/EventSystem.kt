@@ -1,16 +1,14 @@
-package com.huseyincan.eventdriven.ui.home
+package com.huseyincan.eventdriven.model.inMem
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.huseyincan.eventdriven.model.data.Event
 
-class HomeViewModel : ViewModel() {
+class EventSystem : ViewModel() {
 
-    private val _text = MutableLiveData<List<Event>>().apply {
-        value = mutableListOf()
-    }
-
-    val text: LiveData<List<Event>> = _text
+    private val _events = MutableLiveData<MutableList<Event>>();
+    val events: LiveData<MutableList<Event>> = _events
 
     init {
         addItem(Event("Redkeygang", "Khont ve ekibi sahne alıcak", "İzmir", "22:22"))
@@ -25,8 +23,9 @@ class HomeViewModel : ViewModel() {
     }
 
     fun addItem(event: Event) {
-        val updatedList = _text.value?.toMutableList() ?: mutableListOf()
+        val updatedList = _events.value?.toMutableList() ?: mutableListOf()
         updatedList.add(event)
-        _text.value = updatedList
+        _events.value = updatedList
     }
+
 }

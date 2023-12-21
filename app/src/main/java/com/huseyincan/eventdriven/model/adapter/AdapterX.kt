@@ -1,4 +1,4 @@
-package com.huseyincan.eventdriven.ui.home
+package com.huseyincan.eventdriven.model.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,14 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.huseyincan.eventdriven.R
+import com.huseyincan.eventdriven.model.data.Event
 
 class AdapterX(private var items: List<Event> = emptyList()) : RecyclerView.Adapter<AdapterX.ViewHolder>() {
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private var listenerItems: onItemClickListener? = null
+    class ViewHolder(view: View, private val listener: onItemClickListener?) : RecyclerView.ViewHolder(view), View.OnClickListener {
         val eventName: TextView
         val eventDetail: TextView
         val eventTime: TextView
@@ -25,6 +23,15 @@ class AdapterX(private var items: List<Event> = emptyList()) : RecyclerView.Adap
             eventDetail = view.findViewById(R.id.eventDetail)
             eventTime = view.findViewById(R.id.eventTime)
             eventLocation = view.findViewById(R.id.eventLocation)
+
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener?.onItemClick(position)
+            }
         }
     }
 
@@ -34,7 +41,7 @@ class AdapterX(private var items: List<Event> = emptyList()) : RecyclerView.Adap
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.event_card, viewGroup, false)
 
-        return ViewHolder(view)
+        return ViewHolder(view,listenerItems)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -55,5 +62,13 @@ class AdapterX(private var items: List<Event> = emptyList()) : RecyclerView.Adap
     fun updateItems(newItems: List<Event>) {
         this.items = newItems
         notifyDataSetChanged()
+    }
+
+    interface onItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickListener) {
+        listenerItems = listener
     }
 }
