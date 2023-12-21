@@ -8,4 +8,7 @@
     <string name="event_details">Event Details</string>
     <string name="event_location">İzmir</string>
     <string name="event_time">22:22</string>
+    <string name="title_event">Events</string>
+    <string name="title_tickets">Tickets</string>
+    <string name="title_profile">Profile</string>
 </resources>

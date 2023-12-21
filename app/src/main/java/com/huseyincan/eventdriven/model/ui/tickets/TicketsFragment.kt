@@ -1,4 +1,4 @@
-package com.huseyincan.eventdriven.ui.dashboard
+package com.huseyincan.eventdriven.model.ui.tickets
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.huseyincan.eventdriven.databinding.FragmentDashboardBinding
+import com.huseyincan.eventdriven.model.inMem.EventSystem
 
-class DashboardFragment : Fragment() {
+class TicketsFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
 
@@ -17,21 +18,23 @@ class DashboardFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val eventSystem: EventSystem by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+//        val dashboardViewModel =
+//            ViewModelProvider(this).get(DashboardViewModel::class.java)
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+//        dashboardViewModel.text.observe(viewLifecycleOwner) {
+//            textView.text = it
+//        }
         return root
     }
 
