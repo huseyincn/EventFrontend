@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.huseyincan.eventdriven.model.ui.events.EventsFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:name="com.huseyincan.eventdriven.controller.ui.events.EventsFragment"
+        android:label="@string/title_event"
+        tools:layout="@layout/fragment_events" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.huseyincan.eventdriven.model.ui.tickets.TicketsFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="com.huseyincan.eventdriven.controller.ui.tickets.TicketsFragment"
+        android:label="@string/title_tickets"
+        tools:layout="@layout/fragment_tickets" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.huseyincan.eventdriven.model.ui.profile.ProfileFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.huseyincan.eventdriven.controller.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

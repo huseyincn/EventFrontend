@@ -1,4 +1,4 @@
-package com.huseyincan.eventdriven.model.ui.events
+package com.huseyincan.eventdriven.controller.ui.events
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
-import com.huseyincan.eventdriven.databinding.FragmentHomeBinding
+import com.huseyincan.eventdriven.databinding.FragmentEventsBinding
 import com.huseyincan.eventdriven.model.adapter.AdapterX
 import com.huseyincan.eventdriven.model.data.Event
 import com.huseyincan.eventdriven.model.data.base.Saver
@@ -22,7 +21,7 @@ import kotlinx.coroutines.withContext
 
 class EventsFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentEventsBinding? = null
 
     private lateinit var adapter: AdapterX
 
@@ -39,7 +38,7 @@ class EventsFragment : Fragment() {
 //        val homeViewModel =
 //            ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentEventsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         adapter = AdapterX()
@@ -62,10 +61,7 @@ class EventsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             // Get the database instance
-            val db = Room.databaseBuilder(
-                requireContext(),
-                Saver::class.java, "eventmanager"
-            ).build()
+            val db = Saver.getInstance(requireContext())
 
             val eventDao = db.eventDao()
             var events: List<Event> = listOf()
@@ -75,15 +71,19 @@ class EventsFragment : Fragment() {
                 events = eventDao.getAllEvents()
             }
 
-            // Use the fetched events on the main thread
-            Toast.makeText(requireContext(),"db geldi",Toast.LENGTH_LONG).show()
+           eventSystem.createModel(events)
         }
     }
+
     private fun addClickListenerToRecyclerView(adapterX: AdapterX) {
-        adapterX.setOnItemClickListener(object : AdapterX.onItemClickListener{
+        adapterX.setOnItemClickListener(object : AdapterX.onItemClickListener {
             override fun onItemClick(position: Int) {
                 val item = eventSystem.events.value!![position]
-                Toast.makeText(requireContext(),"${item.eid}, ${item.eventName}, ${item.eventDetail}, ${item.eventTime}, ${item.eventLocation}",Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireContext(),
+                    "${item.eid}, ${item.eventName}, ${item.eventDetail}, ${item.eventTime}, ${item.eventLocation}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         })
     }
