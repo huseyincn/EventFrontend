@@ -1,4 +1,4 @@
-package com.huseyincan.eventdriven.model.ui.tickets
+package com.huseyincan.eventdriven.controller.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.huseyincan.eventdriven.databinding.FragmentDashboardBinding
+import com.huseyincan.eventdriven.databinding.FragmentProfileBinding
 import com.huseyincan.eventdriven.model.inMem.EventSystem
 
-class TicketsFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
-    private var _binding: FragmentDashboardBinding? = null
+    private var _binding: FragmentProfileBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,14 +25,14 @@ class TicketsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        val dashboardViewModel =
-//            ViewModelProvider(this).get(DashboardViewModel::class.java)
+//        val notificationsViewModel =
+//            ViewModelProvider(this).get(NotificationsViewModel::class.java)
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-//        dashboardViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textNotifications
+//        notificationsViewModel.text.observe(viewLifecycleOwner) {
 //            textView.text = it
 //        }
         return root

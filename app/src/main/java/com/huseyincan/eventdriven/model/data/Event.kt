@@ -7,16 +7,18 @@ import java.util.UUID
 
 @Entity
 data class Event(
-    @PrimaryKey val eid: UUID,
+    @PrimaryKey val eid: String,
     @ColumnInfo(name = "event_name") val eventName: String?,
     @ColumnInfo(name = "event_detail") val eventDetail: String?,
     @ColumnInfo(name = "event_location") val eventLocation: String?,
-    @ColumnInfo(name = "event_time") val eventTime: String?
+    @ColumnInfo(name = "event_time") val eventTime: String?,
+    @ColumnInfo(name = "event_date") val eventDate: String?,
 ) {
     constructor(
         eventName: String,
         eventDetail: String,
         eventLocation: String,
-        eventTime: String
-    ) : this(UUID.randomUUID(), eventName, eventDetail, eventLocation, eventTime)
+        eventTime: String,
+        eventDate: String
+    ) : this(UUID.randomUUID().toString(), eventName, eventDetail, eventLocation, eventTime, eventDate)
 }

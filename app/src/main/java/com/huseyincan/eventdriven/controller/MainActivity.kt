@@ -1,4 +1,4 @@
-package com.huseyincan.eventdriven
+package com.huseyincan.eventdriven.controller
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.huseyincan.eventdriven.R
 import com.huseyincan.eventdriven.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
