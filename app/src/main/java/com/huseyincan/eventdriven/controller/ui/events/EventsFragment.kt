@@ -2,14 +2,19 @@ package com.huseyincan.eventdriven.controller.ui.events
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.huseyincan.eventdriven.R
 import com.huseyincan.eventdriven.databinding.FragmentEventsBinding
 import com.huseyincan.eventdriven.model.adapter.AdapterX
 import com.huseyincan.eventdriven.model.data.Event
@@ -25,11 +30,15 @@ class EventsFragment : Fragment() {
 
     private lateinit var adapter: AdapterX
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private val eventSystem: EventSystem by activityViewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -71,7 +80,7 @@ class EventsFragment : Fragment() {
                 events = eventDao.getAllEvents()
             }
 
-           eventSystem.createModel(events)
+            eventSystem.createModel(events)
         }
     }
 
@@ -86,6 +95,22 @@ class EventsFragment : Fragment() {
                 ).show()
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.events_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.create_event -> {
+                findNavController().navigate(R.id.addEventFragment)
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {

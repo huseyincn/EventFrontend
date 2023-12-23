@@ -3,4 +3,7 @@
     <string name="event_name_hint">Enter Event Name Here.</string>
     <string name="event_detail_hint">Enter Event Details Here.</string>
     <string name="event_location_hint">Event Location Details Here.</string>
+    <string name="row_number_text_hint">Enter available row number here.</string>
+    <string name="column_number_text_hint">Enter available column number here.</string>
+    <string name="ticket_price_text_hint">Enter a ticket price.</string>
 </resources>

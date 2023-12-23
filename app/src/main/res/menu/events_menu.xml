@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_favorite"
+        android:id="@+id/create_event"
         android:icon="@drawable/add_event"
         android:title="@string/add_an_event"
         app:showAsAction="ifRoom" />

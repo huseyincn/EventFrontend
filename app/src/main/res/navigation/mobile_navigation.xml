@@ -9,7 +9,13 @@
         android:id="@+id/navigation_home"
         android:name="com.huseyincan.eventdriven.controller.ui.events.EventsFragment"
         android:label="@string/title_event"
-        tools:layout="@layout/fragment_events" />
+        tools:layout="@layout/fragment_events">
+        <action
+            android:id="@+id/action_navigation_home_to_addEventFragment"
+            app:destination="@id/addEventFragment"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -22,4 +28,9 @@
         android:name="com.huseyincan.eventdriven.controller.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/addEventFragment"
+        android:name="com.huseyincan.eventdriven.controller.ui.events.AddEventFragment"
+        android:label="@string/add_an_event_title"
+        tools:layout="@layout/fragment_add_event" />
 </navigation>

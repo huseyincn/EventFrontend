@@ -3,6 +3,7 @@ package com.huseyincan.eventdriven.model.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.huseyincan.eventdriven.R
@@ -13,17 +14,18 @@ class AdapterX(private var items: List<Event> = emptyList()) : RecyclerView.Adap
     private var listenerItems: onItemClickListener? = null
     class ViewHolder(view: View, private val listener: onItemClickListener?) : RecyclerView.ViewHolder(view), View.OnClickListener {
         val eventName: TextView
-        val eventDetail: TextView
+        val eventDate: TextView
         val eventTime: TextView
         val eventLocation: TextView
+        val image : ImageView
 
         init {
             // Define click listener for the ViewHolder's View
             eventName = view.findViewById(R.id.eventName)
-            eventDetail = view.findViewById(R.id.eventDetail)
-            eventTime = view.findViewById(R.id.eventTime)
             eventLocation = view.findViewById(R.id.eventLocation)
-
+            eventDate = view.findViewById(R.id.eventDate)
+            eventTime = view.findViewById(R.id.eventTime)
+            image = view.findViewById(R.id.resimKutusu)
             view.setOnClickListener(this)
         }
 
@@ -51,9 +53,10 @@ class AdapterX(private var items: List<Event> = emptyList()) : RecyclerView.Adap
         // contents of the view with that element
         val tmp: Event = items.get(position)
         viewHolder.eventName.text = tmp.eventName
-        viewHolder.eventDetail.text = tmp.eventDetail
+        viewHolder.eventDate.text = tmp.eventDate
         viewHolder.eventLocation.text = tmp.eventLocation
         viewHolder.eventTime.text = tmp.eventTime
+        viewHolder.image.setImageBitmap(tmp.image)
     }
 
     // Return the size of your dataset (invoked by the layout manager)

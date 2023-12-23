@@ -1,10 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/inputBackround"
-    android:layout_margin="3dp">
+    android:layout_margin="3dp"
+    android:backgroundTint="@color/inputBackround">
 
     <!--    relative layout -->
     <RelativeLayout
@@ -12,74 +12,69 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/resimKutusu"
+            android:id="@+id/ticketImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentStart="true"
-            android:layout_margin="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:contentDescription="@string/my_image_description"
             android:src="@drawable/khont" />
 
         <LinearLayout
-            android:id="@+id/innerlinlayout"
+            android:id="@+id/innerlinlayoutTicket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_toEndOf="@+id/resimKutusu"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@+id/ticketImage"
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/eventName"
+                android:id="@+id/ticketName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:textSize="20dp"
                 android:text="@string/event_name" />
-
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/eventLocation"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/location1"
                 android:layout_margin="5dp"
-                android:text="@string/event_location" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/event_location"
+                android:drawableLeft="@drawable/location1"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/eventDate"
+                    android:id="@+id/ticketDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_alignParentStart="true"
-                    android:drawableLeft="@drawable/time"
                     android:text="@string/event_date"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:drawableLeft="@drawable/time"/>
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/eventTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/event_time"
-                    app:layout_constraintStart_toEndOf="@+id/eventDate"
-                    app:layout_constraintEnd_toStartOf="@+id/eventPrice"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/eventPrice"
+                    android:id="@+id/ticketTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="@string/event_price"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:text="@string/event_time" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
