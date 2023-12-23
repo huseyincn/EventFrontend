@@ -18,4 +18,16 @@
     <string name="create_event_location">Event Location=</string>
     <string name="create_event_time">Event Time=</string>
     <string name="add_an_event">Add an event</string>
+    <string name="add_an_event_title">Event Create</string>
+    <string name="event_submit">Submit</string>
+    <string name="create_event_date">Event Date=</string>
+    <string name="row_column_text">Row Number=</string>
+    <string name="column_number_text">Column Number=</string>
+    <string name="ticket_price_text">Ticket Price=</string>
+    <string name="event_date">23/12/23</string>
+    <string name="event_details_dp">Event Details</string>
+    <string name="event_name_dp">Khontkar Konseri</string>
+    <string name="event_detail_dp_data">İzmir\'de harika sahne perfomansı sizi bekliyor.</string>
+    <string name="buy_ticket">Buy Ticket</string>
+    <string name="event_price">Price</string>
 </resources>

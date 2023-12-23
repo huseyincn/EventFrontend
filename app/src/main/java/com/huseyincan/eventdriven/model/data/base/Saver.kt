@@ -4,14 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.huseyincan.eventdriven.model.dao.EventDao
 import com.huseyincan.eventdriven.model.dao.ProfileDao
 import com.huseyincan.eventdriven.model.dao.TicketDao
 import com.huseyincan.eventdriven.model.data.Event
 import com.huseyincan.eventdriven.model.data.Profile
 import com.huseyincan.eventdriven.model.data.Ticket
+import com.huseyincan.eventdriven.model.data.converter.BitmapBlob
 
-@Database(entities = [Event::class, Profile::class, Ticket::class], version = 5)
+@Database(entities = [Event::class, Profile::class, Ticket::class], version = 6)
+@TypeConverters(BitmapBlob::class)
 abstract class Saver : RoomDatabase() {
     abstract fun eventDao(): EventDao
     abstract fun ticketDao(): TicketDao
@@ -34,9 +37,7 @@ abstract class Saver : RoomDatabase() {
 
                 if (instance == null) {
                     instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        Saver::class.java,
-                        Database_NAME
+                        context.applicationContext, Saver::class.java, Database_NAME
                     ).fallbackToDestructiveMigration()
                         .build() // .fallbackToDestructiveMigration() -> FOR DELETE MIGRATION
 
