@@ -13,7 +13,7 @@ import com.huseyincan.eventdriven.model.data.Profile
 import com.huseyincan.eventdriven.model.data.Ticket
 import com.huseyincan.eventdriven.model.data.converter.BitmapBlob
 
-@Database(entities = [Event::class, Profile::class, Ticket::class], version = 6)
+@Database(entities = [Event::class, Profile::class, Ticket::class], version = 8)
 @TypeConverters(BitmapBlob::class)
 abstract class Saver : RoomDatabase() {
     abstract fun eventDao(): EventDao
@@ -23,7 +23,7 @@ abstract class Saver : RoomDatabase() {
     companion object {
         private const val Database_NAME = "eventmanager.db"
 
-        /**
+        /**n
          * As we need only one instance of db in our app will use to store
          * This is to avoid memory leaks in android when there exist multiple instances of db
          */
