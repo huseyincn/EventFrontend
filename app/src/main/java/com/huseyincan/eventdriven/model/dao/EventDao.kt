@@ -15,7 +15,7 @@ interface EventDao {
     fun getAllEvents(): List<Event>
 
     @Query("SELECT * FROM Event WHERE eid IN (:eids)")
-    fun getByEID(eids: Array<UUID>): List<Event>
+    fun getByEID(eids: Array<String>): List<Event>
 
     @Query("SELECT * FROM Event WHERE event_name LIKE :eventName")
     fun getByEventName(eventName: String) : List<Event>

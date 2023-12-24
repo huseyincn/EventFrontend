@@ -1,13 +1,15 @@
 package com.huseyincan.eventdriven.model.data
 
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 import java.util.UUID
 
 @Entity
+@Parcelize
 data class Event(
     @PrimaryKey val eid: String,
     @ColumnInfo(name = "event_name") val eventName: String?,
@@ -18,7 +20,7 @@ data class Event(
     @ColumnInfo(name = "event_price") val eventPrice: String?,
     @ColumnInfo(name = "row_column") val rowColumn: String?,
     @ColumnInfo(name = "event_image") val image: Bitmap?
-) {
+) : Parcelable {
     constructor(
         eventName: String,
         eventDetail: String,

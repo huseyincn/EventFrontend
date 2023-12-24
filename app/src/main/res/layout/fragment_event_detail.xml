@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical"
     tools:context=".controller.ui.events.EventDetailFragment">
 
@@ -81,6 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="#000000" />
 
     <TextView
@@ -94,50 +94,73 @@
         android:textColor="#313131"
         android:textSize="17sp" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/event_detail_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp"
             android:letterSpacing="0.041"
             android:lineHeight="22sp"
             android:text="23/12/23"
             android:textColor="#313131"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/event_detail_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp"
             android:letterSpacing="0.041"
             android:lineHeight="22sp"
             android:text="20:42"
             android:textColor="#313131"
-            android:textSize="17sp" />
-    </LinearLayout>
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/event_detail_price"
+            app:layout_constraintStart_toEndOf="@+id/event_detail_date"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/event_detail_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:letterSpacing="0.041"
+            android:lineHeight="22sp"
+            android:text="100 TRY"
+            android:textColor="#313131"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="#000000" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/detail_buy_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="@string/buy_ticket"/>
+        android:text="@string/buy_ticket" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="#000000" />
 </LinearLayout>
