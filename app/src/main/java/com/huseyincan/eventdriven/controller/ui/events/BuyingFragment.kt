@@ -9,8 +9,16 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.huseyincan.eventdriven.R
 import com.huseyincan.eventdriven.databinding.FragmentBuyingBinding
 import com.huseyincan.eventdriven.model.data.Event
+import com.huseyincan.eventdriven.model.data.Ticket
+import com.huseyincan.eventdriven.model.data.base.Saver
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -20,6 +28,8 @@ class BuyingFragment : Fragment() {
     private val binding get() = _binding!!
 
     var totalAmount: Int = 0
+    var value: Event? = null
+    var liste: ArrayList<String>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -46,23 +56,37 @@ class BuyingFragment : Fragment() {
             Toast.makeText(requireContext(), "Please add seat to buy ticket.", Toast.LENGTH_LONG)
                 .show()
         } else {
+            viewLifecycleOwner.lifecycleScope.launch {
+                // Get the database instance
+                val db = Saver.getInstance(requireContext())
 
-            // payment loading animasyon çıkar ticket objesi oluştur db ekle
+                val ticketDao = db.ticketDao()
+
+                withContext(Dispatchers.IO) {
+                    if (liste != null && value != null) {
+                        for (i in 0 until (liste?.size ?: 0)) {
+                            val parts = liste!![i].split("X")
+                            val row = parts[0]
+                            val column = parts[1]
+                            ticketDao.insertAll(Ticket(value!!.eid, "10", row, column,value!!.eventName))
+                        }
+                    }
+                }
+            }
+            findNavController().navigate(R.id.navigation_tickets)
         }
     }
 
     fun priceCalc() {
         val bundle = this.arguments
-        var value: Event? = null
-        var liste: ArrayList<String>? = null
         if (bundle != null) {
             value = bundle.getParcelable("etkinlik") // replace with your key
             liste = bundle.getStringArrayList("koltuk")
         }
         if (value != null && liste != null) {
-            totalAmount = (value.eventPrice?.toInt() ?: 0) * liste.size
+            totalAmount = (value!!.eventPrice?.toInt() ?: 0) * liste!!.size
             binding.buyPrice.text =
-                "$totalAmount TRY WILL BE DEDUCTED FOR ${liste.size} TICKET(s).\""
+                "$totalAmount TRY WILL BE DEDUCTED FOR ${liste!!.size} TICKET(s).\""
         }
     }
 

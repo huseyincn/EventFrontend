@@ -21,7 +21,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_tickets"
         android:name="com.huseyincan.eventdriven.controller.ui.tickets.TicketsFragment"
         android:label="@string/title_tickets"
         tools:layout="@layout/fragment_tickets" />
@@ -49,7 +49,11 @@
         android:id="@+id/buyingFragment"
         android:name="com.huseyincan.eventdriven.controller.ui.events.BuyingFragment"
         android:label="Buy Ticket"
-        tools:layout="@layout/fragment_buying" />
+        tools:layout="@layout/fragment_buying" >
+        <action
+            android:id="@+id/action_buyingFragment_to_navigation_tickets"
+            app:destination="@id/navigation_tickets" />
+    </fragment>
     <fragment
         android:id="@+id/chooseSeatFragment"
         android:name="com.huseyincan.eventdriven.controller.ui.events.ChooseSeatFragment"
