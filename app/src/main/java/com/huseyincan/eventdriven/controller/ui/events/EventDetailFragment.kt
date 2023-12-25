@@ -5,55 +5,52 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.huseyincan.eventdriven.R
-
-/**
- * A simple [Fragment] subclass.
- * Use the [EventDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.huseyincan.eventdriven.databinding.FragmentEventDetailBinding
+import com.huseyincan.eventdriven.model.data.Event
 
 class EventDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
+    private var _binding: FragmentEventDetailBinding? = null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_event_detail, container, false)
+        _binding = FragmentEventDetailBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        return root
     }
 
-    companion object {
-        /**444444444444444444444444444444444444444444444444
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EventDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EventDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        createEventDetail()
+    }
+
+    fun createEventDetail() {
+        val bundle = this.arguments
+        if (bundle != null) {
+            val value = bundle.getParcelable<Event>("event") // replace with your key
+            if (value != null) {
+                binding.eventDetailImage.setImageBitmap(value.image)
+                binding.eventDetailName.text = value.eventName
+                binding.describ.text = value.eventDetail
+                binding.eventDetailDate.text = value.eventDate
+                binding.eventDetailTime.text = value.eventTime
+                binding.eventDetailLocation.text = value.eventLocation
+                binding.eventDetailPrice.text = "${value.eventPrice} TRY"
+
+                binding.detailBuyButton.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putParcelable("buy", value)
+                    findNavController().navigate(R.id.chooseSeatFragment, bundle)
                 }
             }
+        }
     }
 }

@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -27,10 +26,8 @@ import kotlinx.coroutines.withContext
 class EventsFragment : Fragment() {
 
     private var _binding: FragmentEventsBinding? = null
-
-    private lateinit var adapter: AdapterX
-
     private val binding get() = _binding!!
+    private lateinit var adapter: AdapterX
 
     private val eventSystem: EventSystem by activityViewModels()
 
@@ -44,9 +41,6 @@ class EventsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        val homeViewModel =
-//            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentEventsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -55,9 +49,6 @@ class EventsFragment : Fragment() {
         val recyclerView: RecyclerView = binding.recycler
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-//        homeViewModel.text.observe(viewLifecycleOwner) {
-//            adapter.updateItems(it)
-//        }
         eventSystem.events.observe(viewLifecycleOwner) {
             adapter.updateItems(it)
             addClickListenerToRecyclerView(adapter)
@@ -88,11 +79,9 @@ class EventsFragment : Fragment() {
         adapterX.setOnItemClickListener(object : AdapterX.onItemClickListener {
             override fun onItemClick(position: Int) {
                 val item = eventSystem.events.value!![position]
-                Toast.makeText(
-                    requireContext(),
-                    "${item.eid}, ${item.eventName}, ${item.eventDetail}, ${item.eventTime}, ${item.eventLocation}",
-                    Toast.LENGTH_LONG
-                ).show()
+                val bundle = Bundle()
+                bundle.putParcelable("event", item)
+                findNavController().navigate(R.id.eventDetailFragment, bundle)
             }
         })
     }

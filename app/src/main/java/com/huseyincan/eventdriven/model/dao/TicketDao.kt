@@ -13,10 +13,10 @@ interface TicketDao {
     fun getAllTickets(): List<Ticket>
 
     @Query("SELECT * FROM Ticket WHERE profile_id = :pid")
-    fun getUserTickets(pid: UUID): List<Ticket>
+    fun getUserTickets(pid: String): List<Ticket>
 
     @Query("SELECT * FROM Ticket WHERE event_id = :eid")
-    fun getEventTickets(eid: UUID): List<Ticket>
+    fun getEventTickets(eid: String): List<Ticket>
 
     @Insert
     fun insertAll(vararg tickets: Ticket)
