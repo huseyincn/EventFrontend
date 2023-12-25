@@ -51,8 +51,11 @@
         android:label="Buy Ticket"
         tools:layout="@layout/fragment_buying" >
         <action
-            android:id="@+id/action_buyingFragment_to_navigation_tickets"
-            app:destination="@id/navigation_tickets" />
+            android:id="@+id/action_buyingFragment_to_navigation_home2"
+            app:destination="@id/navigation_home"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/chooseSeatFragment"

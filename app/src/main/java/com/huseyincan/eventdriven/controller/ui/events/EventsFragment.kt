@@ -94,7 +94,9 @@ class EventsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.create_event -> {
-                findNavController().navigate(R.id.addEventFragment)
+                val bundle = Bundle()
+                bundle.putParcelable("editEvent", null)
+                findNavController().navigate(R.id.addEventFragment, bundle)
                 true
             }
 

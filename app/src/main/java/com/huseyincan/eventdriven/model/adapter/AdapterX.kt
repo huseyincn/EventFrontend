@@ -9,15 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.huseyincan.eventdriven.R
 import com.huseyincan.eventdriven.model.data.Event
 
-class AdapterX(private var items: List<Event> = emptyList()) : RecyclerView.Adapter<AdapterX.ViewHolder>() {
+class AdapterX(private var items: List<Event> = emptyList()) :
+    RecyclerView.Adapter<AdapterX.ViewHolder>() {
 
     private var listenerItems: onItemClickListener? = null
-    class ViewHolder(view: View, private val listener: onItemClickListener?) : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+    class ViewHolder(view: View, private val listener: onItemClickListener?) :
+        RecyclerView.ViewHolder(view), View.OnClickListener {
         val eventName: TextView
         val eventDate: TextView
         val eventTime: TextView
         val eventLocation: TextView
-        val image : ImageView
+        val image: ImageView
+        val eventPrice: TextView
 
         init {
             // Define click listener for the ViewHolder's View
@@ -26,6 +30,7 @@ class AdapterX(private var items: List<Event> = emptyList()) : RecyclerView.Adap
             eventDate = view.findViewById(R.id.eventDate)
             eventTime = view.findViewById(R.id.eventTime)
             image = view.findViewById(R.id.resimKutusu)
+            eventPrice = view.findViewById(R.id.eventPrice)
             view.setOnClickListener(this)
         }
 
@@ -43,7 +48,7 @@ class AdapterX(private var items: List<Event> = emptyList()) : RecyclerView.Adap
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.event_card, viewGroup, false)
 
-        return ViewHolder(view,listenerItems)
+        return ViewHolder(view, listenerItems)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -56,6 +61,7 @@ class AdapterX(private var items: List<Event> = emptyList()) : RecyclerView.Adap
         viewHolder.eventDate.text = tmp.eventDate
         viewHolder.eventLocation.text = tmp.eventLocation
         viewHolder.eventTime.text = tmp.eventTime
+        viewHolder.eventPrice.text = "${tmp.eventPrice} TRY"
         viewHolder.image.setImageBitmap(tmp.image)
     }
 

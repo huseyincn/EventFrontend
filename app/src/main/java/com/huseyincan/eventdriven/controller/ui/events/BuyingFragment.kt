@@ -68,11 +68,12 @@ class BuyingFragment : Fragment() {
                             val parts = liste!![i].split("X")
                             val row = parts[0]
                             val column = parts[1]
-                            ticketDao.insertAll(Ticket(value!!.eid, "10", row, column,value!!.eventName))
+                            ticketDao.insertAll(Ticket(value!!.eid, "10", row, column))
                         }
                     }
                 }
             }
+            findNavController().popBackStack(R.id.navigation_home,true)
             findNavController().navigate(R.id.navigation_tickets)
         }
     }

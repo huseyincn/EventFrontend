@@ -178,8 +178,8 @@ class ChooseSeatFragment : Fragment() {
     }
 
     val clickListener = View.OnClickListener { view ->
-        val satir: Int = view.id / SUTUNSAYISI
-        val sutun: Int = view.id % SUTUNSAYISI - 1
+        val satir: Int = (view.id - 1) / SUTUNSAYISI
+        val sutun: Int = (view.id - 1) % SUTUNSAYISI
         val seatStr = "${satir}X${sutun}"
         if (view.tag as Int == STATUS_AVAILABLE) {
             if (seats.contains(seatStr)) {
