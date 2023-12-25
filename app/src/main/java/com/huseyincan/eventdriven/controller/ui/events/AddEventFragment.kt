@@ -27,6 +27,7 @@ class AddEventFragment : Fragment() {
     private var _binding: FragmentAddEventBinding? = null
     private val binding get() = _binding!!
 
+    private var eventX: Event? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -45,7 +46,30 @@ class AddEventFragment : Fragment() {
         openDatePicker()
         openTimeDialog()
         chooseImage()
-        createEvent()
+
+        val bundle = this.arguments
+        if (bundle != null) {
+            eventX = bundle.getParcelable<Event>("editEvent") // replace with your key
+
+            if (eventX == null) {
+                createEvent()
+            } else {
+                binding.addEventTitleText.text = "UPDATE EVENT"
+                binding.eventImage.setImageBitmap(eventX!!.image)
+                val instanceX = Editable.Factory.getInstance()
+                binding.eventName.text = instanceX.newEditable(eventX!!.eventName)
+                binding.eventDetail.text = instanceX.newEditable(eventX!!.eventDetail)
+                binding.eventLocation.text = instanceX.newEditable(eventX!!.eventLocation)
+                binding.eventTime.text = instanceX.newEditable(eventX!!.eventTime)
+                binding.eventDate.text = instanceX.newEditable(eventX!!.eventDate)
+                val parts = eventX!!.rowColumn!!.split("X")
+                binding.rowNumberText.text = instanceX.newEditable(parts[0])
+                binding.columnNumberText.text = instanceX.newEditable(parts[1])
+                binding.ticketPrice.text = instanceX.newEditable(eventX!!.eventPrice)
+                binding.submitEvent.text = "UPDATE"
+                updateEvent()
+            }
+        }
     }
 
     fun createEvent() {
@@ -58,9 +82,9 @@ class AddEventFragment : Fragment() {
                 binding.eventDate.text.toString(),
                 binding.ticketPrice.text.toString(),
                 "${binding.rowNumberText.text.toString()}X${binding.columnNumberText.text.toString()}",
-                binding.eventImage.drawToBitmap()
+                binding.eventImage.drawToBitmap(),
+                "10"
             )
-
 
             viewLifecycleOwner.lifecycleScope.launch {
                 val db = Saver.getInstance(requireContext())
@@ -69,6 +93,35 @@ class AddEventFragment : Fragment() {
 
                 withContext(Dispatchers.IO) {
                     eventDao.insertAll(event)
+                }
+            }
+
+            findNavController().navigate(R.id.navigation_home)
+        }
+    }
+
+    fun updateEvent() {
+        binding.submitEvent.setOnClickListener {
+
+            eventX!!.eventName = binding.eventName.text.toString()
+            eventX!!.eventDetail = binding.eventDetail.text.toString()
+            eventX!!.eventLocation = binding.eventLocation.text.toString()
+            eventX!!.eventTime = binding.eventTime.text.toString()
+            eventX!!.eventDate = binding.eventDate.text.toString()
+            eventX!!.eventPrice = binding.ticketPrice.text.toString()
+            eventX!!.rowColumn =
+                "${binding.rowNumberText.text.toString()}X${binding.columnNumberText.text.toString()}"
+            eventX!!.image = binding.eventImage.drawToBitmap()
+            eventX!!.organizerId = "10"
+
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                val db = Saver.getInstance(requireContext())
+
+                val eventDao = db.eventDao()
+
+                withContext(Dispatchers.IO) {
+                    eventDao.updateEvent(eventX!!)
                 }
             }
 
@@ -115,7 +168,7 @@ class AddEventFragment : Fragment() {
         }
     }
 
-    val REQUEST_CODE : Int = 42
+    val REQUEST_CODE: Int = 42
     fun chooseImage() {
         binding.eventImage.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)

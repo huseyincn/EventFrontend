@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import com.huseyincan.eventdriven.model.data.Event
 import com.huseyincan.eventdriven.model.data.association.EventWithTickets
 import java.util.UUID
@@ -18,7 +19,7 @@ interface EventDao {
     fun getByEID(eids: Array<String>): List<Event>
 
     @Query("SELECT * FROM Event WHERE event_name LIKE :eventName")
-    fun getByEventName(eventName: String) : List<Event>
+    fun getByEventName(eventName: String): List<Event>
 
     @Transaction
     @Query("SELECT * FROM Event")
@@ -29,5 +30,8 @@ interface EventDao {
 
     @Delete
     fun delete(event: Event)
+
+    @Update
+    fun updateEvent(event: Event)
 
 }

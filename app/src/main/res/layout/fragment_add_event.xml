@@ -11,6 +11,7 @@
         tools:context=".controller.ui.events.AddEventFragment">
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/add_event_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
