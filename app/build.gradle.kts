@@ -58,6 +58,12 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
 
+    testImplementation ("org.mockito:mockito-core:3.3.3")
+    testImplementation ("org.robolectric:robolectric:4.4")
+
+    // Android Testing Support Library's runner and rules
+    androidTestImplementation ("androidx.test:runner:1.2.0")
+    androidTestImplementation ("androidx.test:rules:1.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("com.google.zxing:core:3.5.2")
 //    // To use Kotlin annotation processing tool (kapt)
