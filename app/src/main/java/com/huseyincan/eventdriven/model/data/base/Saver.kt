@@ -13,7 +13,7 @@ import com.huseyincan.eventdriven.model.data.Profile
 import com.huseyincan.eventdriven.model.data.Ticket
 import com.huseyincan.eventdriven.model.data.converter.BitmapBlob
 
-@Database(entities = [Event::class, Profile::class, Ticket::class], version = 6)
+@Database(entities = [Event::class, Profile::class, Ticket::class], version = 10)
 @TypeConverters(BitmapBlob::class)
 abstract class Saver : RoomDatabase() {
     abstract fun eventDao(): EventDao
