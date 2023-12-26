@@ -12,14 +12,15 @@ import java.util.UUID
 @Parcelize
 data class Event(
     @PrimaryKey val eid: String,
-    @ColumnInfo(name = "event_name") val eventName: String?,
-    @ColumnInfo(name = "event_detail") val eventDetail: String?,
-    @ColumnInfo(name = "event_location") val eventLocation: String?,
-    @ColumnInfo(name = "event_time") val eventTime: String?,
-    @ColumnInfo(name = "event_date") val eventDate: String?,
-    @ColumnInfo(name = "event_price") val eventPrice: String?,
-    @ColumnInfo(name = "row_column") val rowColumn: String?,
-    @ColumnInfo(name = "event_image") val image: Bitmap?
+    @ColumnInfo(name = "event_name") var eventName: String?,
+    @ColumnInfo(name = "event_detail") var eventDetail: String?,
+    @ColumnInfo(name = "event_location") var eventLocation: String?,
+    @ColumnInfo(name = "event_time") var eventTime: String?,
+    @ColumnInfo(name = "event_date") var eventDate: String?,
+    @ColumnInfo(name = "event_price") var eventPrice: String?,
+    @ColumnInfo(name = "row_column") var rowColumn: String?,
+    @ColumnInfo(name = "event_image") var image: Bitmap?,
+    @ColumnInfo(name = "organizer_id") var organizerId: String?
 ) : Parcelable {
     constructor(
         eventName: String,
@@ -29,7 +30,8 @@ data class Event(
         eventDate: String,
         eventPrice: String,
         rowColumn: String,
-        image: Bitmap
+        image: Bitmap,
+        organizerId: String
     ) : this(
         UUID.randomUUID().toString(),
         eventName,
@@ -39,6 +41,7 @@ data class Event(
         eventDate,
         eventPrice,
         rowColumn,
-        image
+        image,
+        organizerId
     )
 }

@@ -7,5 +7,9 @@ data class TicketForAdapter(
     val ticketDate: String?,
     val ticketLocation: String?,
     val ticketTime: String?,
-    val ticketImage: Bitmap?
+    val ticketImage: Bitmap?,
+    val row: String?,
+    val seat: String?,
+    val eventId: String?,
+    val ticketId: String?
 )

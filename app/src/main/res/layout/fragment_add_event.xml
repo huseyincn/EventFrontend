@@ -11,6 +11,7 @@
         tools:context=".controller.ui.events.AddEventFragment">
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/add_event_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -117,13 +118,6 @@
                 android:hint="Select Time"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/time_picker"
-                tools:ignore="SpeakableTextPresentCheck" />
         </LinearLayout>
 
         <LinearLayout
@@ -152,13 +146,6 @@
                 android:hint="DD/MM/YYYY"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_date"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/date_picker"
-                tools:ignore="SpeakableTextPresentCheck" />
         </LinearLayout>
 
         <LinearLayout

@@ -52,28 +52,35 @@ class BuyingFragment : Fragment() {
     }
 
     fun makePayment() {
-        if (totalAmount == 0) {
-            Toast.makeText(requireContext(), "Please add seat to buy ticket.", Toast.LENGTH_LONG)
-                .show()
-        } else {
-            viewLifecycleOwner.lifecycleScope.launch {
-                // Get the database instance
-                val db = Saver.getInstance(requireContext())
+        binding.paythecost.setOnClickListener {
+            if (totalAmount == 0) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please add seat to buy ticket.",
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+            } else {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    // Get the database instance
+                    val db = Saver.getInstance(requireContext())
 
-                val ticketDao = db.ticketDao()
+                    val ticketDao = db.ticketDao()
 
-                withContext(Dispatchers.IO) {
-                    if (liste != null && value != null) {
-                        for (i in 0 until (liste?.size ?: 0)) {
-                            val parts = liste!![i].split("X")
-                            val row = parts[0]
-                            val column = parts[1]
-                            ticketDao.insertAll(Ticket(value!!.eid, "10", row, column,value!!.eventName))
+                    withContext(Dispatchers.IO) {
+                        if (liste != null && value != null) {
+                            for (i in 0 until (liste?.size ?: 0)) {
+                                val parts = liste!![i].split("X")
+                                val row = parts[0]
+                                val column = parts[1]
+                                ticketDao.insertAll(Ticket(value!!.eid, "10", row, column))
+                            }
                         }
                     }
                 }
+                findNavController().popBackStack(R.id.navigation_home, true)
+                findNavController().navigate(R.id.navigation_tickets)
             }
-            findNavController().navigate(R.id.navigation_tickets)
         }
     }
 

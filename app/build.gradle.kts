@@ -59,7 +59,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.6.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-//
+    implementation("com.google.zxing:core:3.5.2")
 //    // To use Kotlin annotation processing tool (kapt)
 //    kapt("androidx.room:room-compiler:$room_version")
 //    // To use Kotlin Symbol Processing (KSP)
