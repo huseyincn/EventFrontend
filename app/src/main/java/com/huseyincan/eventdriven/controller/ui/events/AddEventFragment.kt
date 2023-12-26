@@ -1,15 +1,24 @@
 package com.huseyincan.eventdriven.controller.ui.events
 
+import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -33,8 +42,7 @@ class AddEventFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAddEventBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -100,6 +108,56 @@ class AddEventFragment : Fragment() {
         }
     }
 
+    fun openTimeDialog() {
+        binding.eventTime.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+            val timePickerDialog = TimePickerDialog(
+                requireContext(), { _, selectedHour, selectedMinute ->
+                    binding.eventTime.text =
+                        Editable.Factory.getInstance()
+                            .newEditable("$selectedHour:$selectedMinute")
+                }, hour, minute, true
+            )
+            timePickerDialog.show()
+        }
+    }
+
+    val REQUEST_CODE: Int = 42
+    fun chooseImage() {
+        binding.eventImage.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, REQUEST_CODE)
+        }
+    }
+
+    fun openDatePicker() {
+        binding.eventDate.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            val datePickerDialog = DatePickerDialog(
+                requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+                    binding.eventDate.text = Editable.Factory.getInstance()
+                        .newEditable("$selectedDay/$selectedMonth/${selectedYear.toString().takeLast(2)}")
+                }, year, month, day
+            )
+            datePickerDialog.show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            val uri = data.data
+            binding.eventImage.setImageURI(uri)
+        }
+    }
+
     fun updateEvent() {
         binding.submitEvent.setOnClickListener {
 
@@ -124,65 +182,61 @@ class AddEventFragment : Fragment() {
                     eventDao.updateEvent(eventX!!)
                 }
             }
+            val CHANNEL_ID = "30"
+            var builder = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.khont).setContentTitle("An Event just got updated.")
+                .setContentText("${eventX!!.eventName} has just got updated check the details on ticket page.")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+// Create the NotificationChannel (API 26+)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val name = "channelName"
+                val descriptionText = "channelDescription"
+                val importance = NotificationManager.IMPORTANCE_DEFAULT
+                val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                    description = descriptionText
+                }
+                // Register the channel with the system
+                val notificationManager: NotificationManager =
+                    requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.createNotificationChannel(channel)
+            }
 
-            findNavController().navigate(R.id.navigation_home)
-        }
-    }
+// Show the notification
+            with(NotificationManagerCompat.from(requireContext())) {
+                if (ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            requireActivity(),
+                            Manifest.permission.POST_NOTIFICATIONS
+                        )
+                    ) {
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+                    } else {
+                        // No explanation needed; request the permission
+                        ActivityCompat.requestPermissions(
+                            requireActivity(),
+                            arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                            43
+                        )
 
-    fun openDatePicker() {
-        binding.btnDate.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-            val datePickerDialog = DatePickerDialog(
-                requireContext(),
-                { _, selectedYear, selectedMonth, selectedDay ->
-                    binding.eventDate.text = Editable.Factory.getInstance()
-                        .newEditable("$selectedDay/$selectedMonth/$selectedYear")
-                },
-                year,
-                month,
-                day
-            )
-            datePickerDialog.show()
-        }
-    }
+                        with(NotificationManagerCompat.from(requireContext())) {
+                            notify(10, builder.build())
+                        }
+                    }
+                } else {
+                    // Permission has already been granted
+                    with(NotificationManagerCompat.from(requireContext())) {
+                        notify(10, builder.build())
+                    }
+                }
 
-    fun openTimeDialog() {
-        binding.btnTime.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val hour = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(Calendar.MINUTE)
-            val timePickerDialog = TimePickerDialog(
-                requireContext(),
-                { _, selectedHour, selectedMinute ->
-                    binding.eventTime.text =
-                        Editable.Factory.getInstance().newEditable("$selectedHour:$selectedMinute")
-                },
-                hour,
-                minute,
-                true
-            )
-            timePickerDialog.show()
-        }
-    }
-
-    val REQUEST_CODE: Int = 42
-    fun chooseImage() {
-        binding.eventImage.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_CODE)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            val uri = data.data
-            binding.eventImage.setImageURI(uri)
+                findNavController().navigate(R.id.navigation_home)
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.huseyincan.eventdriven.R
@@ -75,14 +76,35 @@ class EventDetailFragment : Fragment() {
                 if (isItOwner) {
                     val bundle = Bundle()
                     bundle.putParcelable("editEvent", value)
-                    findNavController().navigate(R.id.addEventFragment,bundle) // TODO BURAYA EVENTI BUNDLE OLARAK GONDER
+                    findNavController().navigate(
+                        R.id.addEventFragment,
+                        bundle
+                    )
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "You are not the organizer of this event.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 true
             }
 
             R.id.seek_report -> {
-                // TODO IF IS IT OWNER KONTROL KOY
-                // TODO BURAYA REPORT PAGE E GONDERME EKLE
+                if (isItOwner) {
+                    val bundle = Bundle()
+                    bundle.putParcelable("reportEvent", value)
+                    findNavController().navigate(
+                        R.id.reportFragment,
+                        bundle
+                    )
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "You are not the organizer of this event.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
                 true
             }
 

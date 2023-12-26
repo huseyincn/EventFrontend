@@ -31,4 +31,7 @@
     <string name="buy_ticket">Buy Ticket</string>
     <string name="event_price">Price</string>
     <string name="choose_seat_title">Choose Seat(s)</string>
+    <string name="report_fragment_title">Report of Event</string>
+    <string name="ticket_buying_title">Buy Ticket</string>
+    <string name="event_detail_title">Event Detail</string>
 </resources>
